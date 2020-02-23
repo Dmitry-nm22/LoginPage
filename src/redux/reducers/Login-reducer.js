@@ -1,12 +1,15 @@
+import {authAPI} from "../../api/api";
+
 const UPDATE_EMAIL = 'UPDATE_EMAIL'
 const UPDATE_PASS = 'UPDATE_PASS'
 const UPDATE_CHECKBOX = 'UPDATE_CHECKBOX'
+const CHANGE_SUCCESS = 'CHANGE_SUCCESS'
 
 let initialState = {
-    email: 'p',
-    password: 'e',
-    rememberMe: false
-
+    email: '',
+    password: '',
+    rememberMe: false,
+    success: false
 }
 
 const loginReducer = (state = initialState, action) =>{
@@ -27,6 +30,11 @@ debugger
                 ...state,
                 rememberMe: action.bool
             }
+            case CHANGE_SUCCESS :
+            return {
+                ...state,
+                success: action.bool
+            }
         default: return state
     }
 }
@@ -36,5 +44,21 @@ debugger
 export const updateEmailAC = (email) => ({type: UPDATE_EMAIL, email})
 export const updatePassAC = (pass) => ({type: UPDATE_PASS, pass})
 export const updateCheckboxAC = (bool) => ({type: UPDATE_CHECKBOX, bool})
+export const changeSuccess = (bool) => ({type: CHANGE_SUCCESS, bool})
+
+
+
+//thunk creators
+export const SingInTC = () =>{
+    return (dispatch, getState) =>{
+        debugger
+        authAPI.me(getState().email, getState().password, getState().rememberMe)
+            .then(response => {
+                debugger
+                dispatch(changeSuccess(true))
+            }).catch(e =>{
+                dispatch(changeSuccess(false))
+        })
+    }}
 
 export default loginReducer;

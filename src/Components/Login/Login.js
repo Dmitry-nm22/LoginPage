@@ -1,11 +1,11 @@
 import React from "react";
 import s from "./Login.module.css"
-import {updateCheckboxAC} from "../../redux/reducers/Login-reducer";
+
 
 
 function Login(props) {
-    console.log(props)
-    const {login, updateEmail, updatePass,updateCheckbox } = props
+
+    const {login, updateEmail, updatePass,updateCheckbox,singIn } = props;
 
 
     let changeEmail = (e) =>{
@@ -23,15 +23,18 @@ function Login(props) {
         updateCheckbox(bool);
     }
 
+    let setEmail = () =>{
+        if()
+        singIn();
+    }
 
-console.log(login)
     return (
         <div className={s.wraper}>
             <input  placeholder='email' value={login.email} onChange={changeEmail}/>
             <input type="password" placeholder='password' value={login.password} onChange={changePass}/>
             <a href="#">Forgot Password?</a>
             <input type="checkbox" checked={login.rememberMe} onChange={changeCheckBox}/> Remember Me?
-            <button>Sing in</button>
+            <button onClick={setEmail}>Sing in</button>
             <a href="#">Registration</a>
         </div>
     );
